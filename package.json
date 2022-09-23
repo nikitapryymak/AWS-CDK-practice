@@ -2,25 +2,28 @@
   "name": "cdk-practice",
   "version": "0.1.0",
   "bin": {
-    "cdk-practice": "bin/cdk-practice.js"
+    "cdk-practice": "bin/app.js"
   },
   "scripts": {
     "build": "tsc",
+    "build:layer": "rm -rf ./layers; npm install --no-save  --prefix ./layers/nodejs $(node -e \"console.log(Object.entries(require('./package.json').dependencies).map(([k,v])=>\\`\\${k}@\\${v}\\`).join(' '))\")",
     "watch": "tsc -w",
     "test": "jest",
     "cdk": "cdk"
   },
   "devDependencies": {
+    "@types/aws-lambda": "^8.10.104",
     "@types/jest": "^27.5.2",
     "@types/node": "10.17.27",
     "@types/prettier": "2.6.0",
+    "aws-cdk": "2.43.0",
     "jest": "^27.5.1",
     "ts-jest": "^27.1.4",
-    "aws-cdk": "2.43.0",
     "ts-node": "^10.9.1",
     "typescript": "~3.9.7"
   },
   "dependencies": {
+    "@aws-sdk/client-sqs": "^3.171.0",
     "aws-cdk-lib": "2.43.0",
     "constructs": "^10.0.0",
     "source-map-support": "^0.5.21"

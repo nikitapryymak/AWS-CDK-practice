@@ -1,9 +1,7 @@
 {
-  "app": "npx ts-node --prefer-ts-exts bin/cdk-practice.ts",
+  "app": "npx ts-node --prefer-ts-exts bin/app.ts",
   "watch": {
-    "include": [
-      "**"
-    ],
+    "include": ["**"],
     "exclude": [
       "README.md",
       "cdk*.json",
@@ -13,7 +11,8 @@
       "package*.json",
       "yarn.lock",
       "node_modules",
-      "test"
+      "test",
+      "dist"
     ]
   },
   "context": {
@@ -34,9 +33,6 @@
     "@aws-cdk/aws-sns-subscriptions:restrictSqsDescryption": true,
     "@aws-cdk/aws-apigateway:disableCloudWatchRole": true,
     "@aws-cdk/core:enablePartitionLiterals": true,
-    "@aws-cdk/core:target-partitions": [
-      "aws",
-      "aws-cn"
-    ]
+    "@aws-cdk/core:target-partitions": ["aws", "aws-cn"]
   }
 }

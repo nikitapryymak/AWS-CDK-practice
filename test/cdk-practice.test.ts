@@ -1,17 +1,28 @@
-// import * as cdk from 'aws-cdk-lib';
-// import { Template } from 'aws-cdk-lib/assertions';
-// import * as CdkPractice from '../lib/cdk-practice-stack';
+import * as cdk from "aws-cdk-lib";
+import { Template } from "aws-cdk-lib/assertions";
+import PracticeStack from "../lib/PracticeStack";
 
-// example test. To run these tests, uncomment this file along with the
-// example resource in lib/cdk-practice-stack.ts
-test('SQS Queue Created', () => {
-//   const app = new cdk.App();
-//     // WHEN
-//   const stack = new CdkPractice.CdkPracticeStack(app, 'MyTestStack');
-//     // THEN
-//   const template = Template.fromStack(stack);
+describe("Practice Stack", () => {
+  const app = new cdk.App();
+  const stack = new PracticeStack(app, "PracticeStack");
+  const cfnTemplate = Template.fromStack(stack);
 
-//   template.hasResourceProperties('AWS::SQS::Queue', {
-//     VisibilityTimeout: 300
-//   });
+  test("specified resources created", () => {
+    cfnTemplate.resourceCountIs("AWS::Lambda::Function", 1);
+    cfnTemplate.resourceCountIs("AWS::SQS::Queue", 1);
+  });
+
+  test("Lambda has specified properties", () => {
+    cfnTemplate.hasResourceProperties("AWS::Lambda::Function", {
+      Runtime: "nodejs16.x",
+      Handler: "lambda.handler",
+      Environment: {
+        Variables: {
+          QUEUE_URL: {
+            Ref: "MyQueueE6CA6235",
+          },
+        },
+      },
+    });
+  });
 });
